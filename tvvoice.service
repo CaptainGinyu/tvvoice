@@ -1,0 +1,23 @@
+# Make sure a copy of this file is in /lib/systemd/system
+#
+# Start on each boot:
+#    sudo systemctl enable tvvoice.service
+#
+# Start right now:
+#    sudo systemctl start tvvoice.service
+
+[Unit]
+Description=TV Voice control
+Wants=network-online.target
+After=network-online.target
+Wants=systemd-timesyncd.service
+After=systemd-timesyncd.service
+
+[Service]
+Environment=DISPLAY=:0
+Type=simple
+Restart=always
+User=pi
+ExecStart=/usr/bin/python3 -u /home/pi/tvvoice/tvvoice.py
+[Install]
+WantedBy=multi-user.target
